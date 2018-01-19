@@ -10,16 +10,22 @@
     <!-- Bootstrap-->
     <link rel="stylesheet" href="vendor/bootstrap/dist/css/bootstrap.min.css">
     <!-- theme stylesheet-->
-    <link rel="stylesheet" href="css/style.default.css" id="theme-stylesheet">
+    <link rel="stylesheet" href="css/style.default.css" id="theme-css">
     <!-- Favicon-->
     <link rel="shortcut icon" href="favicon.png">
+    <!-- tweek for 1st element top padding offset. Remove if theme selector not exist -->
+    <style>
+        section#intro {
+            padding-top: 70px;
+        }
+    </style>
     <!-- Tweaks for older IEs-->
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 </head>
-<body data-spy="scroll" data-target="#navigation" data-offset="120">
+<body data-spy="scroll" data-target="#navigation" data-offset="80">
 <div id="all">
     <!-- navbar-->
     <header class="header">
@@ -48,8 +54,20 @@
             </div>
         </div>
     </header>
+
     <section id="intro" class="text-intro no-padding-bottom">
         <div class="container">
+            <!-- theme selector. @todo: after removing fix css -->
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="pull-right">
+                        <img src="images/theme-red.png" id="tpl-red" class="theme-switch" alt="red tpl" />
+                        <img src="images/theme-sea.png" id="tpl-sea" class="theme-switch" alt="sea tpl" />
+                        <img src="images/theme-marine.png" id="tpl-marine" class="theme-switch" alt="marine tpl" />
+                    </div>
+                </div>
+            </div>
+            <!-- end theme selector -->
             <div class="row">
                 <div class="col-md-12">
                     <h1>Керченский филиал ("ЮгНИРО") ФГБНУ "АзНИИРХ"</h1>
@@ -434,6 +452,27 @@ $(document).ready(function(){
         var trgt = parts[1];
 
         $('body').scrollTo($('#' + trgt), 800, {offset: -80});
+    });
+
+    $('img.theme-switch').click(function(){
+        var name = $(this).attr('id');
+        var cssLink = $('#theme-css');
+        if (name === 'tpl-red')
+            cssLink.attr('href', 'css/style.default.css?stamp=' + new Date().getMilliseconds());
+
+        if (name === 'tpl-sea')
+            cssLink.attr('href', 'css/style.sea.css?stamp=' + new Date().getMilliseconds());
+
+        if (name === 'tpl-marine')
+            cssLink.attr('href', 'css/style.marine.css?stamp=' + new Date().getMilliseconds());
+    });
+
+    $(window).on('hashchange', function() {
+        var hash = window.location.hash;
+        var cssLink = $('#theme-css');
+        if (hash === 'magic') {
+            // some inside undocumented feature :)
+        }
     });
 });
 </script>
